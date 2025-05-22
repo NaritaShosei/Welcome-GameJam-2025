@@ -78,10 +78,10 @@ public class PlayerController : MonoBehaviour
             Debug.Log("必殺技 発動！！");
 
             // 敵を全滅させる処理（例：タグが Enemy の全オブジェクトを Destroy）
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-            foreach (GameObject enemy in enemies)
+            var targets = FindObjectsByType<ConflictColorSystem>(FindObjectsSortMode.None);
+            foreach (var target in targets)
             {
-                Destroy(enemy);
+                target.SPHit(Random.Range(0, 0.3f));
             }
 
             // ゲージをリセット

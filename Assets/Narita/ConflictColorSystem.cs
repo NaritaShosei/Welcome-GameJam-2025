@@ -41,6 +41,11 @@ public class ConflictColorSystem : MonoBehaviour
 
         return _color == Color.black;
     }
+    public void SPHit(float time)
+    {
+        ScoreManager.Instance.AddScore(_scorePoint);
+        Destroy(gameObject, time);
+    }
 
     public void ColorChange(Color color)
     {
