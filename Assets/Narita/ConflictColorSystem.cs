@@ -1,67 +1,62 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Unity.VisualScripting;
 using UnityEngine;
 
 public class ConflictColorSystem : MonoBehaviour
 {
-    [SerializeField]
-    List<Color> _requiredColors = new List<Color>();
-    List<Color> _viewColors;
+    [SerializeField, Tooltip("Enemyの色の配列")]
+    Color[] _colors = new Color[] { Color.red, Color.blue, Color.green, Color.cyan, Color.magenta, new Color(1, 1, 0, 1) };
+    Color _color;
 
-    HashSet<Color> _hitColors = new HashSet<Color>();
+    bool _isChanged;
 
     SpriteRenderer _sr;
-
-    public bool _isCheck;
     private void Start()
     {
+        //すでに色が変更されていたら処理を抜け出す
+        if (_isChanged) return;
+
+        //ランダムな色に変更
+        var rIndex = Random.Range(0, _colors.Length);
+        _color = _colors[rIndex];
         _sr = GetComponent<SpriteRenderer>();
-
-        _viewColors = new(_requiredColors);
-
-        _viewColors.Reverse();
+        _sr.color = _color;
     }
 
-    private void Update()
-    {
-        if (!_isCheck) return;
-        // デバッグ操作（左クリック＝赤弾、右クリック＝青弾）
-        if (Input.GetMouseButtonDown(0))
-        {
-            Hit(Color.red);
-        }
-        if (Input.GetMouseButtonDown(1))
-        {
-            Hit(Color.blue);
-        }
-    }
 
     public bool Hit(Color bulletColor)
     {
-        if (_requiredColors.Contains(bulletColor))
+        //色の減算
+        _color = _color.AddColor(-1 * bulletColor);
+
+        //引いた色が黒になったら死亡
+        if (_color == Color.black)
         {
-            if (!_hitColors.Contains(bulletColor))
-            {
-                Debug.Log(bulletColor);
-                _hitColors.Add(bulletColor);
-
-
-                if (_hitColors.Count >= _requiredColors.Count)
-                {
-                    Debug.Log("撃破");
-                    Destroy(gameObject);
-                    return true;
-                }
-
-                int index = _requiredColors.IndexOf(bulletColor);
-                _sr.color = _viewColors[index];
-            }
+            _sr.enabled = false;
+            Destroy(this.gameObject);
         }
-        else
-        {
-            Debug.Log("なんやその色");
-        }
-        return false;
+        _sr.color = _color;
+
+        return _color == Color.black;
+    }
+
+    public void ColorChange(Color color)
+    {
+        _sr = GetComponent<SpriteRenderer>();
+        _color = color;
+        _sr.color = _color;
+        _isChanged = true;
+    }
+
+}
+public static class ColorUtility
+{
+    //Colorの拡張メソッド
+    public static Color AddColor(this Color a, Color b)
+    {
+        return new Color(
+             Mathf.Max(a.r + b.r, 0),
+             Mathf.Max(a.g + b.g, 0),
+             Mathf.Max(a.b + b.b, 0),
+             1);
     }
 }

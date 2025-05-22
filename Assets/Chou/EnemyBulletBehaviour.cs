@@ -1,31 +1,41 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyBulletBehaviour : MonoBehaviour
 {
-    // Player‚É“–‚½‚é‚Ü‚Å‚ÌŠÔi•bj
+    // Playerã«å½“ãŸã‚‹ã¾ã§ã®æ™‚é–“ï¼ˆç§’ï¼‰
     [SerializeField] float TimePeriodToHit = default;
-    // “–‚½‚é‚Æ‚«‚ÌŠg‘å”{—¦yQl’l:3z
+    // å½“ãŸã‚‹ã¨ãã®æ‹¡å¤§å€ç‡ã€å‚è€ƒå€¤:3ã€‘
     [SerializeField] float ScaleToHit = default;
-    // ƒtƒŒ[ƒ€–ˆ‚Ìİ’è—pŠg‘å”{—¦
+    // ãƒ•ãƒ¬ãƒ¼ãƒ æ¯ã®è¨­å®šç”¨æ‹¡å¤§å€ç‡
     float ZoomScale = default;
-    // ¶¬‚³‚ê‚Ä‚©‚ç‚ÌŒo‰ßŠÔ
+    // ç”Ÿæˆã•ã‚Œã¦ã‹ã‚‰ã®çµŒéæ™‚é–“
     float TimePast = default;
-    // ’e‚ÌˆÚ“®‘¬“x
+    // å¼¾ã®ç§»å‹•é€Ÿåº¦
     Vector2 BulletVelocity = default;
-    // ’e‚ÌF
-    public int Color = default;
 
-    // ‰æ–Ê’†‰›
+    // ç”»é¢ä¸­å¤®
+
+    PlayerHP _player;
 
     void Start()
     {
         TimePast = 0;
         ZoomScale = 1f;
-        Debug.Log("’e¶¬BF:" + Color);
 
-        // ƒ‰ƒ“ƒ_ƒ€‚Å‘¬“x‚ğ•t—^‚·‚é
+        var random = Random.Range(0, 3);
+
+        Color color = random switch
+        {
+            0 => Color.red,
+            1 => Color.green,
+            2 => Color.blue,
+        };
+
+        GetComponent<ConflictColorSystem>().ColorChange(color);
+
+        // ãƒ©ãƒ³ãƒ€ãƒ ã§é€Ÿåº¦ã‚’ä»˜ä¸ã™ã‚‹
         float bulletX = Random.Range(-1f, 1f);
         float bulletY = Random.Range(-1f, 1f);
         BulletVelocity = new Vector2(bulletX, bulletY);
@@ -37,23 +47,33 @@ public class EnemyBulletBehaviour : MonoBehaviour
     {
         TimePast += Time.deltaTime;
 
-        // Šg‘å”{—¦‚ğZo‚·‚é
+        // æ‹¡å¤§å€ç‡ã‚’ç®—å‡ºã™ã‚‹
         ZoomScale = 1f + (ScaleToHit * TimePast / TimePeriodToHit);
         transform.localScale = new Vector2(ZoomScale, ZoomScale);
 
-        // Œo‰ßŠÔ‚ª“–‚½‚éŠÔ‚æ‚è‘å‚«‚¢ê‡APlayer‚Éƒ_ƒ[ƒW
+        // çµŒéæ™‚é–“ãŒå½“ãŸã‚‹æ™‚é–“ã‚ˆã‚Šå¤§ãã„å ´åˆã€Playerã«ãƒ€ãƒ¡ãƒ¼ã‚¸
         if (TimePast > TimePeriodToHit)
         {
             DoDamageToPlayer();
         }
+
+        Vector2 pos = transform.position;
+
+        pos.x = Mathf.Clamp(pos.x, -8, 8);
+        pos.y = Mathf.Clamp(pos.y, -4, 4);
+
+        transform.position = pos;
     }
 
-    // ƒvƒŒƒCƒ„[ƒ_ƒ[ƒWˆ—
+    // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãƒ€ãƒ¡ãƒ¼ã‚¸å‡¦ç†
     void DoDamageToPlayer()
     {
-        Debug.Log("’e‚ªPlayer‚Éƒ_ƒ[ƒW");
-
+        _player.AddDamage();
         Destroy(this.gameObject);
-        // UI‚ÉƒGƒtƒFƒNƒg‚ğ‚©‚¯‚é
+        // UIã«ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’ã‹ã‘ã‚‹
+    }
+    public void GetPlayer(PlayerHP player)
+    {
+        _player = player;
     }
 }

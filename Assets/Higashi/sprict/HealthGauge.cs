@@ -1,35 +1,41 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthGauge : MonoBehaviour//HpƒQ[ƒW‚ÌŠÇ—
+public class HealthGauge : MonoBehaviour//Hpã‚²ãƒ¼ã‚¸ã®ç®¡ç†
 {
-    public Image hpFillImage; // Fillƒ[ƒ^[‚ÌImageiƒo[•”•ªj
-    public float maxHP = 100f;
-    private float currentHP;
+    public Image hpFillImage; // Fillãƒ¡ãƒ¼ã‚¿ãƒ¼ã®Imageï¼ˆãƒãƒ¼éƒ¨åˆ†ï¼‰
+    //public float maxHP = 100f;
+    //private float currentHP;
 
-    void Start()//ŠJn‚ÉHPƒQ[ƒW‚ğMaX‚É‚·‚éB
+    public void UpdateHPBar(float maxHP, float HP)//ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’å—ã‘ãŸã¨ãã«HPãŒæ¸›ã‚‹ã€‚
     {
-        currentHP = maxHP;
-        UpdateHPBar();
-    }
-
-    public void HPbarDown(float damage)//ƒ_ƒ[ƒW‚ğó‚¯‚½‚Æ‚«‚ÉHP‚ªŒ¸‚éB
-    {
-        currentHP -= damage;
-        currentHP = Mathf.Clamp(currentHP, 0, maxHP);
-        UpdateHPBar();
-    }
-
-    void UpdateHPBar()//Œ»İHP‚ğÅ‘åHP‚ÅŠ„‚Á‚ÄfillAmount‚É‘ã“üB
-    {
-        float fillAmount = currentHP / maxHP;
+        float fillAmount = HP / maxHP;
         hpFillImage.fillAmount = fillAmount;
     }
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))//ƒ_ƒ[ƒW‚ğó‚¯‚é‚½‚ß‚É‰¼‚Éì‚Á‚½
-        {
-            HPbarDown(5f);
-        }
-    }
+
+    //void Start()//é–‹å§‹æ™‚ã«HPã‚²ãƒ¼ã‚¸ã‚’MaXã«ã™ã‚‹ã€‚
+    //{
+    //    currentHP = maxHP;
+    //    UpdateHPBar();
+    //}
+
+    //public void HPbarDown(float damage)//ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’å—ã‘ãŸã¨ãã«HPãŒæ¸›ã‚‹ã€‚
+    //{
+    //    currentHP -= damage;
+    //    currentHP = Mathf.Clamp(currentHP, 0, maxHP);
+    //    UpdateHPBar();
+    //}
+
+    //void UpdateHPBar()//ç¾åœ¨HPã‚’æœ€å¤§HPã§å‰²ã£ã¦fillAmountã«ä»£å…¥ã€‚
+    //{
+    //    float fillAmount = currentHP / maxHP;
+    //    hpFillImage.fillAmount = fillAmount;
+    //}
+    //void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Space))//ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’å—ã‘ã‚‹ãŸã‚ã«ä»®ã«ä½œã£ãŸ
+    //    {
+    //        HPbarDown(5f);
+    //    }
+    //}
 }
