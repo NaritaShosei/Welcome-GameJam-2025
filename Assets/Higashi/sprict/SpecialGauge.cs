@@ -1,47 +1,54 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.WSA;
 
-public class SpecialGauge : MonoBehaviour//SPƒQ[ƒW‚ÌŠÇ—
+public class SpecialGauge : MonoBehaviour//SPã‚²ãƒ¼ã‚¸ã®ç®¡ç†
 {
-    public Image SPFillImage; // Fillƒ[ƒ^[‚ÌImageiƒo[•”•ªj
-    public float maxSP = 100f;
-    public float minSP = 0f;
-    private float currentSP;
+    [SerializeField] Image SPFillImage;
+    // Fillãƒ¡ãƒ¼ã‚¿ãƒ¼ã®Imageï¼ˆãƒãƒ¼éƒ¨åˆ†ï¼‰
+    //public float maxSP = 100f;
+    //public float minSP = 0f;
+    //private float currentSP;
 
-    void Start()//ŠJn‚ÉSPƒQ[ƒW0‚É‚·‚éB
+    public void UpdateGaugeBar(float maxGauge, float currentGauge)//ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’å—ã‘ãŸã¨ãã«HPãŒæ¸›ã‚‹ã€‚
     {
-        currentSP = minSP;
-        UpdateSPBar();
+        float fillAmount = currentGauge / maxGauge;
+        SPFillImage.fillAmount = fillAmount;
     }
-    public void SPbarUp(float UP)//SPƒo[‚ğ’™‚ß‚éB“G‚ğ“|‚µ‚½ŒÄ‚Ño‚µ‚Ä‚­‚¾‚³‚¢Bƒ_ƒ[ƒW‚ğó‚¯‚½‚Æ‚«‚àB
-    {
-        currentSP += UP;
-        currentSP = Mathf.Clamp(currentSP, 0, maxSP);
-        UpdateSPBar();
-    }
-    public void SPreset()//SPƒQ[ƒW‚ğƒŠƒZƒbƒg‚·‚éB‹Z‚ğg‚Á‚½Œã‚ÉŒÄ‚Ño‚µ‚ÄB 
-    {
-        currentSP = 0;
-        UpdateSPBar();
-    }
-    void UpdateSPBar()
-    {
-        float SPfillAmount = currentSP / maxSP;
-        SPFillImage.fillAmount = SPfillAmount;
-    }
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))//ƒ_ƒ[ƒW‚ğó‚¯‚é‚½‚ß‚É‰¼‚Éì‚Á‚½B
-        {
-            SPbarUp(1f);
-        }
-        if (Input.GetKeyDown(KeyCode.R))//Rƒ{ƒ^ƒ“‚Å•KE‹Z‚ğ‰¼‚É‘Å‚Á‚½‚Æ‚·‚éˆ—B
-        {
-            SPreset();
-        }
-    }
+
+    //void Start()//é–‹å§‹æ™‚ã«SPã‚²ãƒ¼ã‚¸0ã«ã™ã‚‹ã€‚
+    //{
+    //    currentSP = minSP;
+    //    UpdateSPBar();
+    //}
+    //public void SPbarUp(float UP)//SPãƒãƒ¼ã‚’è²¯ã‚ã‚‹ã€‚æ•µã‚’å€’ã—ãŸæ™‚å‘¼ã³å‡ºã—ã¦ãã ã•ã„ã€‚ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’å—ã‘ãŸã¨ãã‚‚ã€‚
+    //{
+    //    currentSP += UP;
+    //    currentSP = Mathf.Clamp(currentSP, 0, maxSP);
+    //    UpdateSPBar();
+    //}
+    //public void SPreset()//SPã‚²ãƒ¼ã‚¸ã‚’ãƒªã‚»ãƒƒãƒˆã™ã‚‹ã€‚æŠ€ã‚’ä½¿ã£ãŸå¾Œã«å‘¼ã³å‡ºã—ã¦ã€‚ 
+    //{
+    //    currentSP = 0;
+    //    UpdateSPBar();
+    //}
+    //void UpdateSPBar()
+    //{
+    //    float SPfillAmount = currentSP / maxSP;
+    //    SPFillImage.fillAmount = SPfillAmount;
+    //}
+    //void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Space))//ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’å—ã‘ã‚‹ãŸã‚ã«ä»®ã«ä½œã£ãŸã€‚
+    //    {
+    //        SPbarUp(1f);
+    //    }
+    //    if (Input.GetKeyDown(KeyCode.R))//Rãƒœã‚¿ãƒ³ã§å¿…æ®ºæŠ€ã‚’ä»®ã«æ‰“ã£ãŸã¨ã™ã‚‹å‡¦ç†ã€‚
+    //    {
+    //        SPreset();
+    //    }
+    //}
 }
