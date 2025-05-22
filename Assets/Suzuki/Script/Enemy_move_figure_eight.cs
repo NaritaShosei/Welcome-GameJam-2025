@@ -1,20 +1,25 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class Enemy_move_figure_eight : MonoBehaviour
 {
-    public float speed = 2f;       // ˆÚ“®‘¬“x
-    public float radius = 2f;      // ”ª‚Ìš‚Ì”¼Œa
+    public float speed = 2f;       // ç§»å‹•é€Ÿåº¦
+    public float radius = 2f;      // å…«ã®å­—ã®åŠå¾„
     private float time;
+    float _offsetX;
 
+    private void Start()
+    {
+        _offsetX = Random.Range(-5f, 5f);
+    }
     void Update()
     {
-        time += Time.deltaTime * speed; // ŠÔ‚ği‚ß‚é
+        time += Time.deltaTime * speed; // æ™‚é–“ã‚’é€²ã‚ã‚‹
 
-        // ”ª‚Ìš‚ÌŒvZ (2D)
-        float x = radius * Mathf.Sin(time); // xÀ•W
-        float y = radius * Mathf.Sin(time * 2); // yÀ•W
+        // å…«ã®å­—ã®è¨ˆç®— (2D)
+        float x = radius * Mathf.Sin(time); // xåº§æ¨™
+        float y = radius * Mathf.Sin(time * 2); // yåº§æ¨™
 
-        // V‚µ‚¢ˆÊ’u‚ğİ’è (Vector2)
-        transform.position = new Vector3(x, y/2, 0f);
+        // æ–°ã—ã„ä½ç½®ã‚’è¨­å®š (Vector2)
+        transform.position = new Vector3(_offsetX + x, y / 2, 0f);
     }
 }

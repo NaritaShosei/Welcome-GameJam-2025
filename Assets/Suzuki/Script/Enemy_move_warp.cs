@@ -1,25 +1,24 @@
-using System.Collections.Generic;
-using UnityEngine;
+ï»¿using UnityEngine;
 
 
 
 public class Enemy_warp : MonoBehaviour
 {
     float timer;
-    [SerializeField] float _interval = 1;//ƒ[ƒv‚ÌƒN[ƒ‹ƒ^ƒCƒ€
+    [SerializeField] float _interval = 1;//ãƒ¯ãƒ¼ãƒ—ã®ã‚¯ãƒ¼ãƒ«ã‚¿ã‚¤ãƒ 
     [SerializeField] Vector2[] _positions;
     void Start()
     {
-
+        timer = 0;
     }
     private void Update()
     {
-        var index = Random.Range(0, _positions.Length);@// ¦ İ’è‚µ‚½ƒ[ƒvƒ|ƒWƒVƒ‡ƒ“”‚Ì”ÍˆÍ‚Åƒ‰ƒ“ƒ_ƒ€‚È®”’l‚ª•Ô‚é
-        timer += Time.deltaTime;//timer‚ÉTime.deltaTime‚ğ‰ÁZ‚·‚é
-        if (timer >= _interval) //timer‚ªƒCƒ“ƒ^[ƒoƒ‹ˆÈã‚È‚ç
+        var index = Random.Range(0, _positions.Length);ã€€// â€» è¨­å®šã—ãŸãƒ¯ãƒ¼ãƒ—ãƒã‚¸ã‚·ãƒ§ãƒ³æ•°ã®ç¯„å›²ã§ãƒ©ãƒ³ãƒ€ãƒ ãªæ•´æ•°å€¤ãŒè¿”ã‚‹
+        timer += Time.deltaTime;//timerã«Time.deltaTimeã‚’åŠ ç®—ã™ã‚‹
+        if (timer >= _interval) //timerãŒã‚¤ãƒ³ã‚¿ãƒ¼ãƒãƒ«ä»¥ä¸Šãªã‚‰
         {
-            transform.position= _positions[index];//ƒ|ƒWƒVƒ‡ƒ“‚ğˆÚ“®
-            timer = 0;//timer‚ğƒŠƒZƒbƒg
+            transform.position = _positions[index];//ãƒã‚¸ã‚·ãƒ§ãƒ³ã‚’ç§»å‹•
+            timer = 0;//timerã‚’ãƒªã‚»ãƒƒãƒˆ
         }
     }
 }

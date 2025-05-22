@@ -1,29 +1,27 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class Enemy_move : MonoBehaviour
 {
-    [SerializeField] int speed;                //ƒIƒuƒWƒFƒNƒg‚ÌƒXƒs[ƒh
-    [SerializeField] int radius;               //‰~‚ğ•`‚­”¼Œa
-    private Vector2 defPosition;      //defPosition‚ğVector2‚Å’è‹`‚·‚éB
+    [SerializeField] int speed;                //ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚¹ãƒ”ãƒ¼ãƒ‰
+    [SerializeField] int radius;               //å††ã‚’æãåŠå¾„
+    float _offsetX;
     float x;
     float y;
 
     // Use this for initialization
     void Start()
     {
-        
-        
+        _offsetX = Random.Range(-5f, 5f);
 
-        defPosition = transform.position;    //defPosition‚ğ©•ª‚Ì‚¢‚éˆÊ’u‚Éİ’è‚·‚éB
     }
 
     // Update is called once per frame
     void Update()
     {
-        x = radius * Mathf.Sin(Time.time * speed);      //X²‚Ìİ’è
-        y = radius * Mathf.Cos(Time.time * speed);      //y²‚Ìİ’è
+        x = radius * Mathf.Sin(Time.time * speed);      //Xè»¸ã®è¨­å®š
+        y = radius * Mathf.Cos(Time.time * speed);      //yè»¸ã®è¨­å®š
 
-        transform.position = new Vector2(x + defPosition.x, y+defPosition.y);  //©•ª‚Ì‚¢‚éˆÊ’u‚©‚çÀ•W‚ğ“®‚©‚·B
+        transform.position = new Vector2(x + _offsetX, y);  //è‡ªåˆ†ã®ã„ã‚‹ä½ç½®ã‹ã‚‰åº§æ¨™ã‚’å‹•ã‹ã™ã€‚
 
 
 
