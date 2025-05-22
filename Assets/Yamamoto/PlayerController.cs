@@ -60,11 +60,13 @@ public class PlayerController : MonoBehaviour
 
                 var target = ray.collider.gameObject.GetComponent<ConflictColorSystem>();
                 Debug.Log(target.name);
-                target.Hit(_colorChanger.Color);
+                if (target.Hit(_colorChanger.Color))
+                {
+                    // ゲージを増加（最大値を超えないように）
+                    specialGauge += gaugeGain;
+                    specialGauge = Mathf.Min(specialGauge, gaugeMax);
+                }
 
-                // ゲージを増加（最大値を超えないように）
-                specialGauge += gaugeGain;
-                specialGauge = Mathf.Min(specialGauge, gaugeMax);
             }
         }
 

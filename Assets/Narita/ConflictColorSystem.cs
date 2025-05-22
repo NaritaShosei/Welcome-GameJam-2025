@@ -37,7 +37,7 @@ public class ConflictColorSystem : MonoBehaviour
         }
     }
 
-    public void Hit(Color bulletColor)
+    public bool Hit(Color bulletColor)
     {
         if (_requiredColors.Contains(bulletColor))
         {
@@ -51,7 +51,7 @@ public class ConflictColorSystem : MonoBehaviour
                 {
                     Debug.Log("撃破");
                     Destroy(gameObject);
-                    return;
+                    return true;
                 }
 
                 int index = _requiredColors.IndexOf(bulletColor);
@@ -62,5 +62,6 @@ public class ConflictColorSystem : MonoBehaviour
         {
             Debug.Log("なんやその色");
         }
+        return false;
     }
 }
