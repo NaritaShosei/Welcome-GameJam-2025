@@ -13,6 +13,7 @@ public class ConflictColorSystem : MonoBehaviour
 
     SpriteRenderer _sr;
 
+    public bool _isCheck;
     private void Start()
     {
         _sr = GetComponent<SpriteRenderer>();
@@ -24,6 +25,7 @@ public class ConflictColorSystem : MonoBehaviour
 
     private void Update()
     {
+        if (!_isCheck) return;
         // デバッグ操作（左クリック＝赤弾、右クリック＝青弾）
         if (Input.GetMouseButtonDown(0))
         {
