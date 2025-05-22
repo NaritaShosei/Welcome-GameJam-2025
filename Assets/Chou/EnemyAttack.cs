@@ -7,26 +7,34 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // UŒ‚‚P‚Ì’ePrefab
     [SerializeField] GameObject EnemyBullet = default;
+    // UŒ‚‚Q‚Ì€”õ‚Ìu—ÖvPrefab
     [SerializeField] GameObject EnemyAttack2Ring = default;
-    int Damage = 1;
     // UŒ‚ŠÔŠu(•b)
     [SerializeField]  float AttackInterval = 5f;
-    // UŒ‚‚Q‚ÌŠg‘å”{—¦
-    [SerializeField] float Attack2Scale = default;
-    // UŒ‚‚Q‚Ì‰‰oŠÔ(•b)
-    [SerializeField] float Attack2TimePeriod = default;
-    // Šg‘å‘¬“x
+    // UŒ‚‚Q‰‰o‚ÌŠg‘å‘¬“xyQl’l:0.04z
     [SerializeField] float Attack2ScaleSpeed = default;
+    // UŒ‚‚Q‰‰o‚ÌÅIŠg‘å”{—¦yQl’l:2z
+    [SerializeField] float Attack2Scale = default;
 
+    // UŒ‚ƒN[ƒ‹ƒ_ƒEƒ“
     float AttackCooldown = default;
+    // “G‚ÌF
     int Color = default;
-    [SerializeField] bool DebugSwitch = default;
+    // ó‘Ôƒtƒ‰ƒOFUŒ‚‚Q‰‰o’†
     bool InAttack2 = default;
+    // ó‘Ôƒtƒ‰ƒOFUŒ‚‚Q‰‰oŠg‘å’†
     bool Attack2Arriving = default;
+    // ó‘Ôƒtƒ‰ƒOFUŒ‚‚Q‰‰o–ß‚è’†
     bool Attack2Hit = default;
+    // ƒtƒŒ[ƒ€–ˆ‚ÌŠg‘å”{—¦
     float ZoomScale = default;
+    // ‰ŠúŠg‘å”{—¦
+    float InitZoomScale = default;
+
+    // debug—p
+    [SerializeField] bool DebugSwitch = default;
 
     void Start()
     {
@@ -36,15 +44,15 @@ public class EnemyAttack : MonoBehaviour
         InAttack2 = false;
         Attack2Arriving = false;
         Attack2Hit = false;
-        ZoomScale = 1f;
+        InitZoomScale = transform.localScale.x;
+        ZoomScale = InitZoomScale;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (DebugSwitch)
         {
-            // DEBUG—p
+            // DEBUG—pFƒXƒy[ƒXƒL[‚ÅUŒ‚‚ğƒ‰ƒ“ƒ_ƒ€‚Ås‚¤
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 int attackNum = Random.Range(1, 3);
@@ -57,10 +65,12 @@ public class EnemyAttack : MonoBehaviour
                     PrepareAttack2();
                 }
             }
+            // DEBUG—pF”šƒL[u1v‚ÅUŒ‚‚P‚ğs‚¤
             else if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 DoAttack1();
             }
+            // DEBUG—pF”šƒL[u2v‚ÅUŒ‚‚Q‚ğs‚¤
             else if (Input.GetKeyDown(KeyCode.Alpha2))
             {
                 PrepareAttack2();
@@ -70,6 +80,7 @@ public class EnemyAttack : MonoBehaviour
 
             if (AttackCooldown <= 0)
             {
+                // UŒ‚‰Â”\‚É‚È‚é‚ÆAUŒ‚‚P‚©‚Q‚ğƒ‰ƒ“ƒ_ƒ€‚Å‚·‚é
                 int attackNum = Random.Range(1, 3);
                 if (attackNum == 1)
                 {
@@ -79,13 +90,17 @@ public class EnemyAttack : MonoBehaviour
                 {
                     PrepareAttack2();
                 }
+                // UŒ‚ƒN[ƒ‹ƒ_ƒEƒ“‚ğƒŠƒZƒbƒg
+                AttackCooldown = AttackInterval;
             }
         }
+        // UŒ‚‚Q‰‰o’†‚Ìˆ—
         if (InAttack2)
         {
             DoAttack2();
         }
     }
+
     // “GUŒ‚‚PF’e‚ğŒ‚‚Â
     void DoAttack1()
     {
@@ -102,13 +117,14 @@ public class EnemyAttack : MonoBehaviour
         GameObject attackRing = Instantiate(EnemyAttack2Ring, transform.position, Quaternion.identity, transform);
     }
 
-    // “GUŒ‚‚QF‘Ì“–‚½‚è
+    // “GUŒ‚‚QFUŒ‚ŠJn
     public void StartAttack2()
     {
         InAttack2 = true;
         Attack2Arriving = true;
     }
 
+    // “GUŒ‚‚QFUŒ‚‰‰o
     void DoAttack2()
     {
         if (Attack2Arriving)
@@ -125,14 +141,15 @@ public class EnemyAttack : MonoBehaviour
         {
             ZoomScale = ZoomScale - Attack2ScaleSpeed;
             transform.localScale = new Vector2(ZoomScale, ZoomScale);
-            if (ZoomScale <= 1f)
+            if (ZoomScale <= InitZoomScale)
             {
-                transform.localScale = new Vector2(1f, 1f);
+                transform.localScale = new Vector2(InitZoomScale, InitZoomScale);
                 Attack2Hit = false;
                 InAttack2 = false;
             }
         }
     }
+    // ƒvƒŒƒCƒ„[ƒ_ƒ[ƒWˆ—
     void DoDamageToPlayer()
     {
         Debug.Log("UŒ‚‚Q‚ªPlayer‚Éƒ_ƒ[ƒW");
