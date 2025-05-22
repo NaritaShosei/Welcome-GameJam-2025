@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("aaaaaa");
             var ray = Physics2D.Raycast(transform.position, Camera.main.transform.forward, 10);
-            if (ray.collider != null && ray.collider.name == "Enemy")
+            if (ray.collider != null && ray.collider.CompareTag("Enemy"))
             {
 
                 var target = ray.collider.gameObject.GetComponent<ConflictColorSystem>();

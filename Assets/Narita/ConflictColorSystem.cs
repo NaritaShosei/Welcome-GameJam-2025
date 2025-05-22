@@ -11,12 +11,16 @@ public class ConflictColorSystem : MonoBehaviour
 
     HashSet<Color> _hitColors = new HashSet<Color>();
 
+    [SerializeField]
     SpriteRenderer _sr;
 
     public bool _isCheck;
     private void Start()
     {
-        _sr = GetComponent<SpriteRenderer>();
+        if (_sr == null)
+        {
+            _sr = GetComponent<SpriteRenderer>();
+        }
 
         _viewColors = new(_requiredColors);
 
@@ -63,5 +67,11 @@ public class ConflictColorSystem : MonoBehaviour
             Debug.Log("なんやその色");
         }
         return false;
+    }
+
+    public void AddList(Color color)
+    {
+        _requiredColors.Add(color);
+        _sr.color = color;
     }
 }
