@@ -4,14 +4,11 @@ using UnityEngine;
 
 public class EnemyBulletBehaviour : MonoBehaviour
 {
-    // Start is called before the first frame update
-    // Playerに当たるまでの時間
+    // Playerに当たるまでの時間（秒）
     [SerializeField] float TimePeriodToHit = default;
-    // 当たるときの拡大倍率
+    // 当たるときの拡大倍率【参考値:3】
     [SerializeField] float ScaleToHit = default;
-    GameObject player = default;
-    // フレーム毎の拡大倍率の増える量
-    float ZoomScaleCountUp = default;
+    // フレーム毎の設定用拡大倍率
     float ZoomScale = default;
     // 生成されてからの経過時間
     float TimePast = default;
@@ -20,27 +17,30 @@ public class EnemyBulletBehaviour : MonoBehaviour
     // 弾の色
     public int Color = default;
 
+    // 画面中央
+
     void Start()
     {
         TimePast = 0;
-        ZoomScaleCountUp = ScaleToHit / (TimePeriodToHit * (1f / Time.deltaTime)) / 2;
         ZoomScale = 1f;
-        Debug.Log("弾の色:" + Color);
-        float bulletX = Random.Range(-1.5f, 1.5f);
-        float bulletY = Random.Range(-1.5f, 1.5f);
+        Debug.Log("弾生成。色:" + Color);
+
+        // ランダムで速度を付与する
+        float bulletX = Random.Range(-1f, 1f);
+        float bulletY = Random.Range(-1f, 1f);
         BulletVelocity = new Vector2(bulletX, bulletY);
         gameObject.GetComponent<Rigidbody2D>().velocity = BulletVelocity;
-        player = GameObject.Find("Player");
     }
 
     // Update is called once per frame
     void Update()
     {
+        TimePast += Time.deltaTime;
+
         // 拡大倍率を算出する
         ZoomScale = 1f + (ScaleToHit * TimePast / TimePeriodToHit);
-        transform.localScale = (Vector3) new Vector2(ZoomScale, ZoomScale);
+        transform.localScale = new Vector2(ZoomScale, ZoomScale);
 
-        TimePast += Time.deltaTime;
         // 経過時間が当たる時間より大きい場合、Playerにダメージ
         if (TimePast > TimePeriodToHit)
         {
@@ -48,6 +48,7 @@ public class EnemyBulletBehaviour : MonoBehaviour
         }
     }
 
+    // プレイヤーダメージ処理
     void DoDamageToPlayer()
     {
         Debug.Log("弾がPlayerにダメージ");
