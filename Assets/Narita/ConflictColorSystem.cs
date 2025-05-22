@@ -12,7 +12,10 @@ public class ConflictColorSystem : MonoBehaviour
     SpriteRenderer _sr;
     private void Start()
     {
+        //すでに色が変更されていたら処理を抜け出す
         if (_isChanged) return;
+
+        //ランダムな色に変更
         var rIndex = Random.Range(0, _colors.Length);
         _color = _colors[rIndex];
         _sr = GetComponent<SpriteRenderer>();
@@ -22,7 +25,10 @@ public class ConflictColorSystem : MonoBehaviour
 
     public bool Hit(Color bulletColor)
     {
+        //色の減算
         _color = _color.AddColor(-1 * bulletColor);
+
+        //引いた色が黒になったら死亡
         if (_color == Color.black)
         {
             _sr.enabled = false;
@@ -44,6 +50,7 @@ public class ConflictColorSystem : MonoBehaviour
 }
 public static class ColorUtility
 {
+    //Colorの拡張メソッド
     public static Color AddColor(this Color a, Color b)
     {
         return new Color(
