@@ -1,23 +1,22 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyAttack2RingBehaviour : MonoBehaviour
 {
     // Start is called before the first frame update
-    // Player‚Éƒ_ƒ[ƒW‚Ü‚Å‚ÌŠÔi•bj
+    // Playerã«ãƒ€ãƒ¡ãƒ¼ã‚¸ã¾ã§ã®æ™‚é–“ï¼ˆç§’ï¼‰
     [SerializeField] float TimePeriodToDamage = default;
-    // ‰ŠúŠg‘å”{—¦yQl’l:5z
+    // åˆæœŸæ‹¡å¤§å€ç‡ã€å‚è€ƒå€¤:5ã€‘
     [SerializeField] float InitScale = default;
-    // ƒ_ƒ[ƒW‚ÌŠg‘å”{—¦yQl’l:0z
+    // ãƒ€ãƒ¡ãƒ¼ã‚¸æ™‚ã®æ‹¡å¤§å€ç‡ã€å‚è€ƒå€¤:0ã€‘
     [SerializeField] float HitScale = default;
-    // ƒtƒŒ[ƒ€–ˆ‚ÌŠg‘å”{—¦‚Ì‘‚¦‚é—Ê
+    // ãƒ•ãƒ¬ãƒ¼ãƒ æ¯ã®æ‹¡å¤§å€ç‡ã®å¢—ãˆã‚‹é‡
     float ZoomScale = default;
-    // ¶¬‚³‚ê‚Ä‚©‚ç‚ÌŒo‰ßŠÔ
+    // ç”Ÿæˆã•ã‚Œã¦ã‹ã‚‰ã®çµŒéæ™‚é–“
     float TimePast = default;
     void Start()
     {
-        Debug.Log("UŒ‚‚Q€”õRing¶¬.");
         ZoomScale = InitScale;
         TimePast = 0;
     }
@@ -25,21 +24,20 @@ public class EnemyAttack2RingBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // ˆ—‚ÌŠg‘å”{—¦‚©‚ç0‚Ü‚Åk¬‚·‚é
+        // å‡¦ç†ã®æ‹¡å¤§å€ç‡ã‹ã‚‰0ã¾ã§ç¸®å°ã™ã‚‹
         transform.localScale = new Vector2(ZoomScale, ZoomScale);
         TimePast += Time.deltaTime;
         ZoomScale = InitScale * (1 - (TimePast / TimePeriodToDamage));
 
-        // ƒ}ƒCƒiƒX’l‚É‚È‚é‚±‚Æ‚ğ–h~
+        // ãƒã‚¤ãƒŠã‚¹å€¤ã«ãªã‚‹ã“ã¨ã‚’é˜²æ­¢
         if(ZoomScale < 0f)
         {
             ZoomScale = 0f;
         }
 
-        // ƒ_ƒ[ƒWŠÔ‚É’B‚·‚é‚ÆAUŒ‚‚Q‰‰o‚ğŠJn‚µA©g‚ğÁ‚·
+        // ãƒ€ãƒ¡ãƒ¼ã‚¸æ™‚é–“ã«é”ã™ã‚‹ã¨ã€æ”»æ’ƒï¼’æ¼”å‡ºã‚’é–‹å§‹ã—ã€è‡ªèº«ã‚’æ¶ˆã™
         if(TimePast > TimePeriodToDamage)
         {
-            Debug.Log("RingÁ–ÅAUŒ‚‚QÀ{");
             GetComponentInParent<EnemyAttack>().StartAttack2();
             Destroy(gameObject);
         }

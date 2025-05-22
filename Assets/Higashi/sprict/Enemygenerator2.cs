@@ -1,9 +1,9 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
-public class Enemygenerator2 : MonoBehaviour//“G‚ğ‰æ–Êl‹÷‚ÌŠO‚É¶¬‚·‚éB
+public class Enemygenerator2 : MonoBehaviour//æ•µã‚’ç”»é¢å››éš…ã®å¤–ã«ç”Ÿæˆã™ã‚‹ã€‚
 {
     [SerializeField]GameObject[] enemyPrefabs;
-    [SerializeField] float spawnInterval = 3f; // ¶¬ŠÔŠui•bj
+    [SerializeField] float spawnInterval = 3f; // ç”Ÿæˆé–“éš”ï¼ˆç§’ï¼‰
 
     private float timer = 0f;
 
@@ -20,7 +20,7 @@ public class Enemygenerator2 : MonoBehaviour//“G‚ğ‰æ–Êl‹÷‚ÌŠO‚É¶¬‚·‚éB
 
     void SpawnEnemy()
     {
-        // ƒJƒƒ‰‰EŠO‚Éƒ‰ƒ“ƒ_ƒ€‚ÈYˆÊ’u‚Å¶¬
+        // ã‚«ãƒ¡ãƒ©å³å¤–ã«ãƒ©ãƒ³ãƒ€ãƒ ãªYä½ç½®ã§ç”Ÿæˆ <- ãƒ©ãƒ³ãƒ€ãƒ ã˜ã‚ƒãªã„ã‚ˆï¼¾ï¼¾
         Vector3 viewportPos = new Vector3(1f, 1.2f, 0f);
         Vector3 worldPos = Camera.main.ViewportToWorldPoint(viewportPos);
         worldPos.z = 0;

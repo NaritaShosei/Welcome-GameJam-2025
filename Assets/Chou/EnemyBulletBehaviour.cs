@@ -33,7 +33,7 @@ public class EnemyBulletBehaviour : MonoBehaviour
             2 => Color.blue,
         };
 
-        GetComponent<ConflictColorSystem>().AddList(color);
+        GetComponent<ConflictColorSystem>().ColorChange(color);
 
         // ランダムで速度を付与する
         float bulletX = Random.Range(-1f, 1f);
@@ -68,7 +68,6 @@ public class EnemyBulletBehaviour : MonoBehaviour
     // プレイヤーダメージ処理
     void DoDamageToPlayer()
     {
-        Debug.Log("弾がPlayerにダメージ");
         _player.AddDamage();
         Destroy(this.gameObject);
         // UIにエフェクトをかける

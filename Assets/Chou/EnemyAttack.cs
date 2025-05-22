@@ -105,7 +105,6 @@ public class EnemyAttack : MonoBehaviour
     // 敵攻撃１：弾を撃つ
     void DoAttack1()
     {
-        Debug.Log("攻撃１発動");
         GameObject enemyBullet = Instantiate(EnemyBullet, transform.position, Quaternion.identity);
         var bulletBeh = enemyBullet.GetComponent<EnemyBulletBehaviour>();
         bulletBeh.GetPlayer(_player);
@@ -116,7 +115,6 @@ public class EnemyAttack : MonoBehaviour
     // 敵攻撃２：予備動作
     void PrepareAttack2()
     {
-        Debug.Log("攻撃２用意開始");
         GameObject attackRing = Instantiate(EnemyAttack2Ring, transform.position, Quaternion.identity, transform);
     }
 
@@ -157,7 +155,6 @@ public class EnemyAttack : MonoBehaviour
     void DoDamageToPlayer()
     {
         _player.AddDamage();
-        Debug.Log("攻撃２がPlayerにダメージ");
         // UIにエフェクトをかける
     }
 }
