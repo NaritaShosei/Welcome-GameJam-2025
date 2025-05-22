@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    float a;
+    float specialGauge = 0f;            // 必殺技ゲージ
+    [SerializeField] float gaugeMax = 100f;        // ゲージ最大値
+    [SerializeField] float gaugeGain = 5f;        // 1回の攻撃で増える量
+    //const float gaugeGainDestroy = 10f;     //敵を倒したときに得る量
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,20 +22,68 @@ public class PlayerController : MonoBehaviour
         Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         transform.position = pos;
 
+        //攻撃を左クリックで発動
 
         if (Input.GetMouseButtonDown(0))
         {
             Attack();
         }
-    }
 
-    void Attack()
-    {
-        var ray = Physics2D.Raycast(transform.position, Camera.main.transform.forward, 10);
-        if (ray.collider != null && ray.collider.CompareTag("Enemy"))
+        //必殺技をマウスの中央ボタンで発動
+
+        if (Input.GetMouseButtonDown(2) && specialGauge >= gaugeMax)
         {
-            Debug.Log("攻撃しました");
+            UseSpecialMove();
+
+        }
+            
+
+        // 必殺技ゲージの状態を表示（デバッグ用）
+        Debug.Log($"必殺技ゲージ: {specialGauge}/{gaugeMax}");
+
+
+        //敵を倒すと必殺技がたまる
+         //if () 
+        {
+
+
         }
 
+        void Attack()
+        {
+            var ray = Physics2D.Raycast(transform.position, Camera.main.transform.forward, 10);
+            if (ray.collider != null && ray.collider.name == "Enemy")
+            {
+
+
+                Debug.Log("イテッ");
+
+
+                // ゲージを増加（最大値を超えないように）
+                specialGauge += gaugeGain;
+                specialGauge = Mathf.Min(specialGauge, gaugeMax);
+            }
+
+            
+
+
+        }
+
+
+
+        void UseSpecialMove()
+        {
+            Debug.Log("必殺技 発動！！");
+
+            // 敵を全滅させる処理（例：タグが Enemy の全オブジェクトを Destroy）
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            foreach (GameObject enemy in enemies)
+            {
+                Destroy(enemy);
+            }
+            
+            // ゲージをリセット
+            specialGauge = 0f;
+        }
     }
 }
