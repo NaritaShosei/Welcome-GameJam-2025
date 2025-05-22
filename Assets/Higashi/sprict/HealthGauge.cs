@@ -1,19 +1,19 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HPBar : MonoBehaviour
+public class HealthGauge : MonoBehaviour//Hpゲージの管理
 {
     public Image hpFillImage; // FillメーターのImage（バー部分）
     public float maxHP = 100f;
     private float currentHP;
 
-    void Start()
+    void Start()//開始時にHPゲージをMaXにする。
     {
         currentHP = maxHP;
         UpdateHPBar();
     }
 
-    public void TakeDamage(float damage)//ダメージを受けたときにHPが減る。
+    public void HPbarDown(float damage)//ダメージを受けたときにHPが減る。
     {
         currentHP -= damage;
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);
@@ -25,11 +25,11 @@ public class HPBar : MonoBehaviour
         float fillAmount = currentHP / maxHP;
         hpFillImage.fillAmount = fillAmount;
     }
-    void Update()//ダメージを受けるために仮に作った
+    void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))//ダメージを受けるために仮に作った
         {
-            TakeDamage(5f);
+            HPbarDown(5f);
         }
     }
 }
