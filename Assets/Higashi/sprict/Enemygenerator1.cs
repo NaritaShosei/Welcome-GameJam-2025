@@ -1,19 +1,21 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemygenerator1 : MonoBehaviour
 {
-    [SerializeField]private GameObject[] enemyPrefabs;    // ¶¬‚·‚é“G‚ÌƒvƒŒƒnƒu(•¡”‘Î‰)
-    [SerializeField] Transform[] spawnPoints;    // “G‚ÌoŒ»ˆÊ’ui•¡”‘Î‰j
-    [SerializeField] float spawnInterval = 3f;   // “G‚ğ¶¬‚·‚éŠÔŠui•bj
+    [SerializeField] private GameObject[] enemyPrefabs;    // ç”Ÿæˆã™ã‚‹æ•µã®ãƒ—ãƒ¬ãƒãƒ–(è¤‡æ•°å¯¾å¿œ)
+    [SerializeField] Transform[] spawnPoints;    // æ•µã®å‡ºç¾ä½ç½®ï¼ˆè¤‡æ•°å¯¾å¿œï¼‰
+    [SerializeField] float spawnInterval = 3f;   // æ•µã‚’ç”Ÿæˆã™ã‚‹é–“éš”ï¼ˆç§’ï¼‰
+    [SerializeField] float _intervalDelta = 0.2f;
+    [SerializeField] float _minInterval = 1.5f;
 
     private float timer;
 
     // Start is called before the first frame update
     void Start()
     {
-        timer = spawnInterval;//timer‚É¶¬ŠÔ‚ğ‘ã“üB
+        timer = spawnInterval;//timerã«ç”Ÿæˆæ™‚é–“ã‚’ä»£å…¥ã€‚
     }
 
     // Update is called once per frame
@@ -24,6 +26,8 @@ public class Enemygenerator1 : MonoBehaviour
         if (timer <= 0f)
         {
             SpawnEnemy();
+            //Intervalã‚’å¾ã€…ã«æ¸›ã‚‰ã—ã€åŠ æ¸›ã§æ­¢ã‚ã‚‹
+            spawnInterval = Mathf.Max(spawnInterval - _intervalDelta, _minInterval);
             timer = spawnInterval;
         }
 
@@ -32,11 +36,11 @@ public class Enemygenerator1 : MonoBehaviour
     {
         if (enemyPrefabs.Length == 0 || spawnPoints.Length == 0) return;
 
-        // ƒ‰ƒ“ƒ_ƒ€‚È“G‚ÆƒXƒ|[ƒ“ƒ|ƒCƒ“ƒg‚ğ‘I‚Ô
+        // ãƒ©ãƒ³ãƒ€ãƒ ãªæ•µã¨ã‚¹ãƒãƒ¼ãƒ³ãƒã‚¤ãƒ³ãƒˆã‚’é¸ã¶
         GameObject selectedEnemy = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
         Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
 
-        // “G‚ğ¶¬
+        // æ•µã‚’ç”Ÿæˆ
         Instantiate(selectedEnemy, spawnPoint.position, spawnPoint.rotation);
     }
 }
