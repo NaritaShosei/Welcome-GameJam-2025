@@ -9,6 +9,8 @@ public class ConflictColorSystem : MonoBehaviour
 
     bool _isChanged;
 
+    [SerializeField, Header("加算するスコア")]
+    int _scorePoint;
     SpriteRenderer _sr;
     private void Start()
     {
@@ -32,6 +34,7 @@ public class ConflictColorSystem : MonoBehaviour
         if (_color == Color.black)
         {
             _sr.enabled = false;
+            ScoreManager.Instance.AddScore(_scorePoint);
             Destroy(this.gameObject);
         }
         _sr.color = _color;

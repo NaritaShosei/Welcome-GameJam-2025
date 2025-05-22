@@ -1,3 +1,4 @@
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
@@ -6,16 +7,17 @@ using UnityEngine;
 public class ScoreManager : MonoBehaviour
 {
 
-    public static ScoreManager instance; //@ƒVƒ“ƒOƒ‹ƒgƒ“
+    public static ScoreManager Instance; //ã€€ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³
 
+    [NonSerialized]
     public int score = 0;
 
     private void Awake()
     {
-        //‘¼‚ÉƒCƒ“ƒXƒ^ƒ“ƒX‚ª‚È‚©‚Á‚½‚ç©•ª‚ğg‚¤
-        if (instance == null)
+        //ä»–ã«ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãŒãªã‹ã£ãŸã‚‰è‡ªåˆ†ã‚’ä½¿ã†
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -27,7 +29,7 @@ public class ScoreManager : MonoBehaviour
     public void AddScore(int amount)
     {
         score += amount;
-        Debug.Log("ƒXƒRƒA‘‰ÁI¡‚ÌƒXƒRƒA;" + score);
+        Debug.Log("ã‚¹ã‚³ã‚¢å¢—åŠ ï¼ä»Šã®ã‚¹ã‚³ã‚¢;" + score);
     }
 
     public void ScoreReset()
