@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
@@ -7,52 +7,51 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
-    // UŒ‚‚P‚Ì’ePrefab
+    // æ”»æ’ƒï¼‘ã®å¼¾Prefab
     [SerializeField] GameObject EnemyBullet = default;
-    // UŒ‚‚Q‚Ì€”õ‚Ìu—ÖvPrefab
+    // æ”»æ’ƒï¼’ã®æº–å‚™ã®ã€Œè¼ªã€Prefab
     [SerializeField] GameObject EnemyAttack2Ring = default;
-    // UŒ‚ŠÔŠu(•b)
-    [SerializeField]  float AttackInterval = 5f;
-    // UŒ‚‚Q‰‰o‚ÌŠg‘å‘¬“xyQl’l:0.04z
+    // æ”»æ’ƒé–“éš”(ç§’)
+    [SerializeField] float AttackInterval = 5f;
+    // æ”»æ’ƒï¼’æ¼”å‡ºã®æ‹¡å¤§é€Ÿåº¦ã€å‚è€ƒå€¤:0.04ã€‘
     [SerializeField] float Attack2ScaleSpeed = default;
-    // UŒ‚‚Q‰‰o‚ÌÅIŠg‘å”{—¦yQl’l:2z
+    // æ”»æ’ƒï¼’æ¼”å‡ºã®æœ€çµ‚æ‹¡å¤§å€ç‡ã€å‚è€ƒå€¤:2ã€‘
     [SerializeField] float Attack2Scale = default;
 
-    // UŒ‚ƒN[ƒ‹ƒ_ƒEƒ“
+    // æ”»æ’ƒã‚¯ãƒ¼ãƒ«ãƒ€ã‚¦ãƒ³
     float AttackCooldown = default;
-    // “G‚ÌF
-    int Color = default;
-    // ó‘Ôƒtƒ‰ƒOFUŒ‚‚Q‰‰o’†
+    // çŠ¶æ…‹ãƒ•ãƒ©ã‚°ï¼šæ”»æ’ƒï¼’æ¼”å‡ºä¸­
     bool InAttack2 = default;
-    // ó‘Ôƒtƒ‰ƒOFUŒ‚‚Q‰‰oŠg‘å’†
+    // çŠ¶æ…‹ãƒ•ãƒ©ã‚°ï¼šæ”»æ’ƒï¼’æ¼”å‡ºæ‹¡å¤§ä¸­
     bool Attack2Arriving = default;
-    // ó‘Ôƒtƒ‰ƒOFUŒ‚‚Q‰‰o–ß‚è’†
+    // çŠ¶æ…‹ãƒ•ãƒ©ã‚°ï¼šæ”»æ’ƒï¼’æ¼”å‡ºæˆ»ã‚Šä¸­
     bool Attack2Hit = default;
-    // ƒtƒŒ[ƒ€–ˆ‚ÌŠg‘å”{—¦
+    // ãƒ•ãƒ¬ãƒ¼ãƒ æ¯ã®æ‹¡å¤§å€ç‡
     float ZoomScale = default;
-    // ‰ŠúŠg‘å”{—¦
+    // åˆæœŸæ‹¡å¤§å€ç‡
     float InitZoomScale = default;
 
-    // debug—p
+    // debugç”¨
     [SerializeField] bool DebugSwitch = default;
 
+    PlayerHP _player;
     void Start()
     {
-        Color = Random.Range(1, 4);
-        Debug.Log("“G¶¬BFF" + Color);
         AttackCooldown = AttackInterval;
         InAttack2 = false;
         Attack2Arriving = false;
         Attack2Hit = false;
         InitZoomScale = transform.localScale.x;
         ZoomScale = InitZoomScale;
+
+        _player = FindAnyObjectByType<PlayerHP>();
     }
 
     void Update()
     {
         if (DebugSwitch)
         {
-            // DEBUG—pFƒXƒy[ƒXƒL[‚ÅUŒ‚‚ğƒ‰ƒ“ƒ_ƒ€‚Ås‚¤
+            // DEBUGç”¨ï¼šã‚¹ãƒšãƒ¼ã‚¹ã‚­ãƒ¼ã§æ”»æ’ƒã‚’ãƒ©ãƒ³ãƒ€ãƒ ã§è¡Œã†
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 int attackNum = Random.Range(1, 3);
@@ -65,22 +64,24 @@ public class EnemyAttack : MonoBehaviour
                     PrepareAttack2();
                 }
             }
-            // DEBUG—pF”šƒL[u1v‚ÅUŒ‚‚P‚ğs‚¤
+            // DEBUGç”¨ï¼šæ•°å­—ã‚­ãƒ¼ã€Œ1ã€ã§æ”»æ’ƒï¼‘ã‚’è¡Œã†
             else if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 DoAttack1();
             }
-            // DEBUG—pF”šƒL[u2v‚ÅUŒ‚‚Q‚ğs‚¤
+            // DEBUGç”¨ï¼šæ•°å­—ã‚­ãƒ¼ã€Œ2ã€ã§æ”»æ’ƒï¼’ã‚’è¡Œã†
             else if (Input.GetKeyDown(KeyCode.Alpha2))
             {
                 PrepareAttack2();
             }
-        } else {
+        }
+        else
+        {
             AttackCooldown -= Time.deltaTime;
 
             if (AttackCooldown <= 0)
             {
-                // UŒ‚‰Â”\‚É‚È‚é‚ÆAUŒ‚‚P‚©‚Q‚ğƒ‰ƒ“ƒ_ƒ€‚Å‚·‚é
+                // æ”»æ’ƒå¯èƒ½ã«ãªã‚‹ã¨ã€æ”»æ’ƒï¼‘ã‹ï¼’ã‚’ãƒ©ãƒ³ãƒ€ãƒ ã§ã™ã‚‹
                 int attackNum = Random.Range(1, 3);
                 if (attackNum == 1)
                 {
@@ -90,54 +91,57 @@ public class EnemyAttack : MonoBehaviour
                 {
                     PrepareAttack2();
                 }
-                // UŒ‚ƒN[ƒ‹ƒ_ƒEƒ“‚ğƒŠƒZƒbƒg
+                // æ”»æ’ƒã‚¯ãƒ¼ãƒ«ãƒ€ã‚¦ãƒ³ã‚’ãƒªã‚»ãƒƒãƒˆ
                 AttackCooldown = AttackInterval;
             }
         }
-        // UŒ‚‚Q‰‰o’†‚Ìˆ—
+        // æ”»æ’ƒï¼’æ¼”å‡ºä¸­ã®å‡¦ç†
         if (InAttack2)
         {
             DoAttack2();
         }
     }
 
-    // “GUŒ‚‚PF’e‚ğŒ‚‚Â
+    // æ•µæ”»æ’ƒï¼‘ï¼šå¼¾ã‚’æ’ƒã¤
     void DoAttack1()
     {
-        Debug.Log("UŒ‚‚P”­“®");
+        Debug.Log("æ”»æ’ƒï¼‘ç™ºå‹•");
         GameObject enemyBullet = Instantiate(EnemyBullet, transform.position, Quaternion.identity);
-        enemyBullet.GetComponent<EnemyBulletBehaviour>().Color = this.Color;
+        var bulletBeh = enemyBullet.GetComponent<EnemyBulletBehaviour>();
+        bulletBeh.GetPlayer(_player);
+
         AttackCooldown = AttackInterval;
     }
 
-    // “GUŒ‚‚QF—\”õ“®ì
+    // æ•µæ”»æ’ƒï¼’ï¼šäºˆå‚™å‹•ä½œ
     void PrepareAttack2()
     {
-        Debug.Log("UŒ‚‚Q—pˆÓŠJn");
+        Debug.Log("æ”»æ’ƒï¼’ç”¨æ„é–‹å§‹");
         GameObject attackRing = Instantiate(EnemyAttack2Ring, transform.position, Quaternion.identity, transform);
     }
 
-    // “GUŒ‚‚QFUŒ‚ŠJn
+    // æ•µæ”»æ’ƒï¼’ï¼šæ”»æ’ƒé–‹å§‹
     public void StartAttack2()
     {
         InAttack2 = true;
         Attack2Arriving = true;
     }
 
-    // “GUŒ‚‚QFUŒ‚‰‰o
+    // æ•µæ”»æ’ƒï¼’ï¼šæ”»æ’ƒæ¼”å‡º
     void DoAttack2()
     {
         if (Attack2Arriving)
         {
             ZoomScale = ZoomScale + Attack2ScaleSpeed;
             transform.localScale = new Vector2(ZoomScale, ZoomScale);
-            if(ZoomScale >= Attack2Scale)
+            if (ZoomScale >= Attack2Scale)
             {
                 DoDamageToPlayer();
                 Attack2Arriving = false;
                 Attack2Hit = true;
             }
-        } else if (Attack2Hit)
+        }
+        else if (Attack2Hit)
         {
             ZoomScale = ZoomScale - Attack2ScaleSpeed;
             transform.localScale = new Vector2(ZoomScale, ZoomScale);
@@ -149,10 +153,11 @@ public class EnemyAttack : MonoBehaviour
             }
         }
     }
-    // ƒvƒŒƒCƒ„[ƒ_ƒ[ƒWˆ—
+    // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãƒ€ãƒ¡ãƒ¼ã‚¸å‡¦ç†
     void DoDamageToPlayer()
     {
-        Debug.Log("UŒ‚‚Q‚ªPlayer‚Éƒ_ƒ[ƒW");
-        // UI‚ÉƒGƒtƒFƒNƒg‚ğ‚©‚¯‚é
+        _player.AddDamage();
+        Debug.Log("æ”»æ’ƒï¼’ãŒPlayerã«ãƒ€ãƒ¡ãƒ¼ã‚¸");
+        // UIã«ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’ã‹ã‘ã‚‹
     }
 }
