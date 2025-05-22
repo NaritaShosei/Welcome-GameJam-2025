@@ -13,7 +13,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] SpecialGauge _gauge;
 
     CameraShake _cameraShake;
-
+    [SerializeField]
+    AnimationCurve _curve;
+    [SerializeField] float _duration;
+    bool _isPlaying;
+    float _timer;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,11 +43,23 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(2) && specialGauge >= gaugeMax)
         {
-            UseSpecialMove();
-
+            _isPlaying = true;
         }
 
+        if (_isPlaying)
+        {
+            _timer += Time.unscaledDeltaTime;
+            float t = Mathf.Clamp01(_timer / _duration);
+            Time.timeScale = _curve.Evaluate(t);
 
+            if (t >= 1)
+            {
+                _isPlaying = false;
+                UseSpecialMove();
+                _timer = 0f;
+            }
+
+        }
         // 必殺技ゲージの状態を表示（デバッグ用）
         Debug.Log($"必殺技ゲージ: {specialGauge}/{gaugeMax}");
 
@@ -60,7 +76,7 @@ public class PlayerController : MonoBehaviour
             var ray = Physics2D.Raycast(transform.position, Camera.main.transform.forward, 10);
             if (ray.collider != null && ray.collider.CompareTag("Enemy"))
             {
-          
+
                 var target = ray.collider.gameObject.GetComponent<ConflictColorSystem>();
                 Debug.Log(target.name);
                 if (target.Hit(_colorChanger.Color))
@@ -89,6 +105,7 @@ public class PlayerController : MonoBehaviour
 
             // ゲージをリセット
             specialGauge = 0f;
+            _gauge.UpdateGaugeBar(gaugeMax, specialGauge);
         }
     }
 }
