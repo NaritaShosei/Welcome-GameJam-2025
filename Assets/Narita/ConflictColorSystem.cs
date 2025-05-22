@@ -12,8 +12,10 @@ public class ConflictColorSystem : MonoBehaviour
     [SerializeField, Header("加算するスコア")]
     int _scorePoint;
     SpriteRenderer _sr;
+    CameraShake _cameraShake;
     private void Start()
     {
+        _cameraShake = FindAnyObjectByType<CameraShake>();
         //すでに色が変更されていたら処理を抜け出す
         if (_isChanged) return;
 
@@ -27,9 +29,14 @@ public class ConflictColorSystem : MonoBehaviour
 
     public bool Hit(Color bulletColor)
     {
+        Color currentColor = _color;
         //色の減算
         _color = _color.AddColor(-1 * bulletColor);
 
+        if (_color != currentColor)
+        {
+            _cameraShake.Shake(0.1f);
+        }
         //引いた色が黒になったら死亡
         if (_color == Color.black)
         {

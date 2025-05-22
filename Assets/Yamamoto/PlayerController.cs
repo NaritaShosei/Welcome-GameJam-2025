@@ -11,10 +11,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] ColorChanger _colorChanger;
     [SerializeField] SpriteRenderer _sr;
     [SerializeField] SpecialGauge _gauge;
+
+    CameraShake _cameraShake;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        _cameraShake = FindAnyObjectByType<CameraShake>();
     }
 
     // Update is called once per frame
@@ -57,7 +60,7 @@ public class PlayerController : MonoBehaviour
             var ray = Physics2D.Raycast(transform.position, Camera.main.transform.forward, 10);
             if (ray.collider != null && ray.collider.CompareTag("Enemy"))
             {
-
+          
                 var target = ray.collider.gameObject.GetComponent<ConflictColorSystem>();
                 Debug.Log(target.name);
                 if (target.Hit(_colorChanger.Color))
@@ -76,7 +79,7 @@ public class PlayerController : MonoBehaviour
         void UseSpecialMove()
         {
             Debug.Log("必殺技 発動！！");
-
+            _cameraShake.Shake(0.6f);
             // 敵を全滅させる処理（例：タグが Enemy の全オブジェクトを Destroy）
             var targets = FindObjectsByType<ConflictColorSystem>(FindObjectsSortMode.None);
             foreach (var target in targets)
