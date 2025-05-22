@@ -14,9 +14,9 @@ public class EnemyAttack : MonoBehaviour
     // 攻撃間隔(秒)
     [SerializeField] float AttackInterval = 5f;
     // 攻撃２演出の拡大速度【参考値:0.04】
-    [SerializeField] float Attack2ScaleSpeed = default;
+    [SerializeField] float Attack2ScaleSpeed = 0.04f;
     // 攻撃２演出の最終拡大倍率【参考値:2】
-    [SerializeField] float Attack2Scale = default;
+    [SerializeField] float Attack2Scale = 2;
 
     // 攻撃クールダウン
     float AttackCooldown = default;
@@ -91,6 +91,9 @@ public class EnemyAttack : MonoBehaviour
                 {
                     PrepareAttack2();
                 }
+
+                AttackInterval = Random.Range(3f, 7f);
+
                 // 攻撃クールダウンをリセット
                 AttackCooldown = AttackInterval;
             }

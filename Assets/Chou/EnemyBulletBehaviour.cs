@@ -60,7 +60,7 @@ public class EnemyBulletBehaviour : MonoBehaviour
         Vector2 pos = transform.position;
 
         pos.x = Mathf.Clamp(pos.x, -8, 8);
-        pos.y = Mathf.Clamp(pos.y, -4, 4);
+        pos.y = Mathf.Clamp(pos.y, -2.53f, 4);
 
         transform.position = pos;
     }
