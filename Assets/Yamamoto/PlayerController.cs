@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     //const float gaugeGainDestroy = 10f;     //敵を倒したときに得る量
     [SerializeField] ColorChanger _colorChanger;
     [SerializeField] SpriteRenderer _sr;
+    [SerializeField] SpecialGauge _gauge;
     // Start is called before the first frame update
     void Start()
     {
@@ -53,7 +54,6 @@ public class PlayerController : MonoBehaviour
 
         void Attack()
         {
-            Debug.Log("aaaaaa");
             var ray = Physics2D.Raycast(transform.position, Camera.main.transform.forward, 10);
             if (ray.collider != null && ray.collider.CompareTag("Enemy"))
             {
@@ -65,6 +65,7 @@ public class PlayerController : MonoBehaviour
                     // ゲージを増加（最大値を超えないように）
                     specialGauge += gaugeGain;
                     specialGauge = Mathf.Min(specialGauge, gaugeMax);
+                    _gauge.UpdateGaugeBar(gaugeMax, specialGauge);
                 }
 
             }
