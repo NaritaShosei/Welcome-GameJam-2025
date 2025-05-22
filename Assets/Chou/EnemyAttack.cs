@@ -35,6 +35,8 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField] bool DebugSwitch = default;
 
     PlayerHP _player;
+
+    Camera _camera;
     void Start()
     {
         AttackCooldown = AttackInterval;
@@ -45,6 +47,8 @@ public class EnemyAttack : MonoBehaviour
         ZoomScale = InitZoomScale;
 
         _player = FindAnyObjectByType<PlayerHP>();
+
+        _camera = Camera.main;
     }
 
     void Update()
@@ -77,31 +81,34 @@ public class EnemyAttack : MonoBehaviour
         }
         else
         {
-            AttackCooldown -= Time.deltaTime;
-
-            if (AttackCooldown <= 0)
+            if (IsInCamera())
             {
-                // 攻撃可能になると、攻撃１か２をランダムでする
-                int attackNum = Random.Range(1, 3);
-                if (attackNum == 1)
-                {
-                    DoAttack1();
-                }
-                else
-                {
-                    PrepareAttack2();
-                }
+                AttackCooldown -= Time.deltaTime;
 
-                AttackInterval = Random.Range(3f, 7f);
+                if (AttackCooldown <= 0)
+                {
+                    // 攻撃可能になると、攻撃１か２をランダムでする
+                    int attackNum = Random.Range(1, 3);
+                    if (attackNum == 1)
+                    {
+                        DoAttack1();
+                    }
+                    else
+                    {
+                        PrepareAttack2();
+                    }
 
-                // 攻撃クールダウンをリセット
-                AttackCooldown = AttackInterval;
+                    AttackInterval = Random.Range(3f, 7f);
+
+                    // 攻撃クールダウンをリセット
+                    AttackCooldown = AttackInterval;
+                }
             }
-        }
-        // 攻撃２演出中の処理
-        if (InAttack2)
-        {
-            DoAttack2();
+            // 攻撃２演出中の処理
+            if (InAttack2)
+            {
+                DoAttack2();
+            }
         }
     }
 
@@ -154,6 +161,13 @@ public class EnemyAttack : MonoBehaviour
             }
         }
     }
+
+    bool IsInCamera()
+    {
+        var point = _camera.WorldToViewportPoint(transform.position);
+        return point.x >= 0 && point.y >= 0 && point.x <= 1 && point.y <= 1;
+    }
+
     // プレイヤーダメージ処理
     void DoDamageToPlayer()
     {
