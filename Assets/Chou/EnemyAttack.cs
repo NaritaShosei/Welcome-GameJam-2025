@@ -39,6 +39,7 @@ public class EnemyAttack : MonoBehaviour
     Camera _camera;
     void Start()
     {
+        AttackInterval = Random.Range(3, 7);
         AttackCooldown = AttackInterval;
         InAttack2 = false;
         Attack2Arriving = false;
@@ -81,7 +82,7 @@ public class EnemyAttack : MonoBehaviour
         }
         else
         {
-            if (IsInCamera())
+            if (IsInCamera() && !_player.IsDead)
             {
                 AttackCooldown -= Time.deltaTime;
 

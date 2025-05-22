@@ -431,8 +431,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc737db401ce1d242a68558824647cb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHP: 10
+  _maxHP: 1
   _gauge: {fileID: 741593417}
+  _curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -17.424467
+      outSlope: -17.424467
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.05483636
+      value: 0.044505678
+      inSlope: 0.15516402
+      outSlope: 0.15516402
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.3517253
+    - serializedVersion: 3
+      time: 0.6502454
+      value: 0.6011106
+      inSlope: -0.094887964
+      outSlope: -0.094887964
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.4292511
+    - serializedVersion: 3
+      time: 0.9833374
+      value: 0.9943428
+      inSlope: 1.1805515
+      outSlope: 1.1805515
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _duration: 3
 --- !u!114 &344648270
 MonoBehaviour:
   m_ObjectHideFlags: 0
