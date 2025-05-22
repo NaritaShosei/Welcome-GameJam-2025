@@ -1,15 +1,15 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    float specialGauge = 0f;            // •KE‹ZƒQ[ƒW
-    [SerializeField] float gaugeMax = 100f;        // ƒQ[ƒWÅ‘å’l
-    [SerializeField] float gaugeGain = 5f;        // 1‰ñ‚ÌUŒ‚‚Å‘‚¦‚é—Ê
-    //const float gaugeGainDestroy = 10f;     //“G‚ğ“|‚µ‚½‚Æ‚«‚É“¾‚é—Ê
-
-
+    float specialGauge = 0f;            // å¿…æ®ºæŠ€ã‚²ãƒ¼ã‚¸
+    [SerializeField] float gaugeMax = 100f;        // ã‚²ãƒ¼ã‚¸æœ€å¤§å€¤
+    [SerializeField] float gaugeGain = 5f;        // 1å›ã®æ”»æ’ƒã§å¢—ãˆã‚‹é‡
+    //const float gaugeGainDestroy = 10f;     //æ•µã‚’å€’ã—ãŸã¨ãã«å¾—ã‚‹é‡
+    [SerializeField] ColorChanger _colorChanger;
+    [SerializeField] SpriteRenderer _sr;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,31 +19,33 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        _sr.color = _colorChanger.Color;
+
         Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         transform.position = pos;
 
-        //UŒ‚‚ğ¶ƒNƒŠƒbƒN‚Å”­“®
+        //æ”»æ’ƒã‚’å·¦ã‚¯ãƒªãƒƒã‚¯ã§ç™ºå‹•
 
         if (Input.GetMouseButtonDown(0))
         {
             Attack();
         }
 
-        //•KE‹Z‚ğƒ}ƒEƒX‚Ì’†‰›ƒ{ƒ^ƒ“‚Å”­“®
+        //å¿…æ®ºæŠ€ã‚’ãƒã‚¦ã‚¹ã®ä¸­å¤®ãƒœã‚¿ãƒ³ã§ç™ºå‹•
 
         if (Input.GetMouseButtonDown(2) && specialGauge >= gaugeMax)
         {
             UseSpecialMove();
 
         }
-            
-
-        // •KE‹ZƒQ[ƒW‚Ìó‘Ô‚ğ•\¦iƒfƒoƒbƒO—pj
-        Debug.Log($"•KE‹ZƒQ[ƒW: {specialGauge}/{gaugeMax}");
 
 
-        //“G‚ğ“|‚·‚Æ•KE‹Z‚ª‚½‚Ü‚é
-         //if () 
+        // å¿…æ®ºæŠ€ã‚²ãƒ¼ã‚¸ã®çŠ¶æ…‹ã‚’è¡¨ç¤ºï¼ˆãƒ‡ãƒãƒƒã‚°ç”¨ï¼‰
+        Debug.Log($"å¿…æ®ºæŠ€ã‚²ãƒ¼ã‚¸: {specialGauge}/{gaugeMax}");
+
+
+        //æ•µã‚’å€’ã™ã¨å¿…æ®ºæŠ€ãŒãŸã¾ã‚‹
+        //if () 
         {
 
 
@@ -51,38 +53,37 @@ public class PlayerController : MonoBehaviour
 
         void Attack()
         {
+            Debug.Log("aaaaaa");
             var ray = Physics2D.Raycast(transform.position, Camera.main.transform.forward, 10);
             if (ray.collider != null && ray.collider.name == "Enemy")
             {
 
+                var target = ray.collider.gameObject.GetComponent<ConflictColorSystem>();
+                Debug.Log(target.name);
+                if (target.Hit(_colorChanger.Color))
+                {
+                    // ã‚²ãƒ¼ã‚¸ã‚’å¢—åŠ ï¼ˆæœ€å¤§å€¤ã‚’è¶…ãˆãªã„ã‚ˆã†ã«ï¼‰
+                    specialGauge += gaugeGain;
+                    specialGauge = Mathf.Min(specialGauge, gaugeMax);
+                }
 
-                Debug.Log("ƒCƒeƒb");
-
-
-                // ƒQ[ƒW‚ğ‘‰ÁiÅ‘å’l‚ğ’´‚¦‚È‚¢‚æ‚¤‚Éj
-                specialGauge += gaugeGain;
-                specialGauge = Mathf.Min(specialGauge, gaugeMax);
             }
-
-            
-
-
         }
 
 
 
         void UseSpecialMove()
         {
-            Debug.Log("•KE‹Z ”­“®II");
+            Debug.Log("å¿…æ®ºæŠ€ ç™ºå‹•ï¼ï¼");
 
-            // “G‚ğ‘S–Å‚³‚¹‚éˆ—i—áFƒ^ƒO‚ª Enemy ‚Ì‘SƒIƒuƒWƒFƒNƒg‚ğ Destroyj
+            // æ•µã‚’å…¨æ»…ã•ã›ã‚‹å‡¦ç†ï¼ˆä¾‹ï¼šã‚¿ã‚°ãŒ Enemy ã®å…¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ Destroyï¼‰
             GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
             foreach (GameObject enemy in enemies)
             {
                 Destroy(enemy);
             }
-            
-            // ƒQ[ƒW‚ğƒŠƒZƒbƒg
+
+            // ã‚²ãƒ¼ã‚¸ã‚’ãƒªã‚»ãƒƒãƒˆ
             specialGauge = 0f;
         }
     }

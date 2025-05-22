@@ -13,6 +13,7 @@ public class ConflictColorSystem : MonoBehaviour
 
     SpriteRenderer _sr;
 
+    public bool _isCheck;
     private void Start()
     {
         _sr = GetComponent<SpriteRenderer>();
@@ -24,6 +25,7 @@ public class ConflictColorSystem : MonoBehaviour
 
     private void Update()
     {
+        if (!_isCheck) return;
         // デバッグ操作（左クリック＝赤弾、右クリック＝青弾）
         if (Input.GetMouseButtonDown(0))
         {
@@ -35,7 +37,7 @@ public class ConflictColorSystem : MonoBehaviour
         }
     }
 
-    public void Hit(Color bulletColor)
+    public bool Hit(Color bulletColor)
     {
         if (_requiredColors.Contains(bulletColor))
         {
@@ -49,7 +51,7 @@ public class ConflictColorSystem : MonoBehaviour
                 {
                     Debug.Log("撃破");
                     Destroy(gameObject);
-                    return;
+                    return true;
                 }
 
                 int index = _requiredColors.IndexOf(bulletColor);
@@ -60,5 +62,6 @@ public class ConflictColorSystem : MonoBehaviour
         {
             Debug.Log("なんやその色");
         }
+        return false;
     }
 }

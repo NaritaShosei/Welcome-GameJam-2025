@@ -1,31 +1,28 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class ColorChanger : MonoBehaviour
 {
-    /// <summary>F‚Ì”z—ñ</summary>
+    /// <summary>è‰²ã®é…åˆ—</summary>
     [SerializeField] Color[] _colors = default;
-    Color _color;
+    public Color Color;
     int _index;
-    // Start is called before the first frame update
-    void Start()
+
+    private void Start()
     {
-        
+        Color = _colors[0];
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetButtonDown("Fire2"))
         {
-            //Debug.Log("F‚ğØ‚è‘Ö‚¦‚éˆ—");
-            _color = _colors[_index];
+            //Debug.Log("è‰²ã‚’åˆ‡ã‚Šæ›¿ãˆã‚‹å‡¦ç†");
+            Color = _colors[_index];
             _index++;
             _index %= _colors.Length;
         }
     }
-
-    
 }
