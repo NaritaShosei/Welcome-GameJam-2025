@@ -44,7 +44,10 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            _audioSource.PlayOneShot(_attackClip);
+            if (_audioSource != null)
+            {
+                _audioSource.PlayOneShot(_attackClip);
+            }
             Attack();
         }
 
@@ -65,7 +68,10 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(2) && _spCount > 0)
         {
-            _audioSource.PlayOneShot(_spClip);
+            if (_audioSource != null)
+            {
+                _audioSource.PlayOneShot(_spClip);
+            }
             _spCount--;
             _sprites[_spCount].enabled = false;
             _isPlaying = true;
