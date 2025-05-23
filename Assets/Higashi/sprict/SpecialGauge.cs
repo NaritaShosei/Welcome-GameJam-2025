@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,12 +13,17 @@ public class SpecialGauge : MonoBehaviour//SPゲージの管理
     //public float maxSP = 100f;
     //public float minSP = 0f;
     //private float currentSP;
-
     public void UpdateGaugeBar(float maxGauge, float currentGauge)//ダメージを受けたときにHPが減る。
     {
         //DOTween使いたい
         float fillAmount = currentGauge / maxGauge;
-        SPFillImage.fillAmount = fillAmount;
+        SPFillImage.DOFillAmount(fillAmount, 0.5f).OnComplete(() =>
+        {
+            if (currentGauge >= maxGauge)
+            {
+                SPFillImage.DOFillAmount(0, 0.1f);
+            }
+        });
     }
 
     //void Start()//開始時にSPゲージ0にする。

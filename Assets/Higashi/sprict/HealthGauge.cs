@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class HealthGauge : MonoBehaviour//Hpゲージの管理
@@ -10,7 +11,7 @@ public class HealthGauge : MonoBehaviour//Hpゲージの管理
     public void UpdateHPBar(float maxHP, float HP)//ダメージを受けたときにHPが減る。
     {
         float fillAmount = HP / maxHP;
-        hpFillImage.fillAmount = fillAmount;
+        hpFillImage.DOFillAmount(fillAmount, 0.5f);
     }
 
     //void Start()//開始時にHPゲージをMaXにする。
