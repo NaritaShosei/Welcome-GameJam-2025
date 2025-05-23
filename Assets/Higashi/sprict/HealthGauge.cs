@@ -11,7 +11,13 @@ public class HealthGauge : MonoBehaviour//Hpゲージの管理
     public void UpdateHPBar(float maxHP, float HP)//ダメージを受けたときにHPが減る。
     {
         float fillAmount = HP / maxHP;
-        hpFillImage.DOFillAmount(fillAmount, 0.5f);
+        hpFillImage.DOFillAmount(fillAmount, 0.5f).SetTarget(hpFillImage).OnComplete(() =>
+        {
+            if (HP <= 0)
+            {
+                SceneLoader.LoadSceneByName("Result");
+            }
+        });
     }
 
     //void Start()//開始時にHPゲージをMaXにする。
