@@ -1,23 +1,21 @@
-using Unity.VisualScripting;
-using UnityEditor.Build;
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
-    //”CˆÓ‚ÌƒV[ƒ“–¼‚ÉØ‚è‘Ö‚¦‚é
+    //ä»»æ„ã®ã‚·ãƒ¼ãƒ³åã«åˆ‡ã‚Šæ›¿ãˆã‚‹
     public static void LoadSceneByName(string ScneName)
     {
         SceneManager.LoadScene(ScneName);
     }
 
-    //ƒV[ƒ“”Ô†‚ÅØ‚è‘Ö‚¦(ƒrƒ‹ƒh€)
+    //ã‚·ãƒ¼ãƒ³ç•ªå·ã§åˆ‡ã‚Šæ›¿ãˆ(ãƒ“ãƒ«ãƒ‰æº–)
     public void LoadSceneByIndex(int sceneIndex)
     {
         SceneManager.LoadScene(sceneIndex);
     }
 
-    //Œ»İ‚ÌƒV[ƒ“‚ğƒŠƒ[ƒh
+    //ç¾åœ¨ã®ã‚·ãƒ¼ãƒ³ã‚’ãƒªãƒ­ãƒ¼ãƒ‰
     public void ReLoadCurrentScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
