@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemygenerator1 : MonoBehaviour
 {
@@ -13,6 +15,7 @@ public class Enemygenerator1 : MonoBehaviour
     [SerializeField] float _changeTime = 20;
     float _currentChangeTime;
     EnemyManager _enemyManager;
+    [SerializeField] Text _phaseText;
 
     private float timer;
 
@@ -29,19 +32,35 @@ public class Enemygenerator1 : MonoBehaviour
     {
         if (_enemyManager.IsEnemyMax()) return;
 
-        if (GameManager.Instance.Timer >= _currentChangeTime)
-        {
-            _currentChangeTime += _changeTime;
-            spawnInterval = Mathf.Max(spawnInterval - _intervalDelta, _minInterval);
-        }
         timer -= Time.deltaTime;
 
         if (timer <= 0f)
         {
             SpawnEnemy();
             timer = spawnInterval;
-            //Intervalを徐々に減らし、加減で止める
 
+        }
+        if (GameManager.Instance.Timer >= _currentChangeTime)
+        {
+            if (spawnInterval > _minInterval)
+            {
+                _phaseText.text = "PHASE UP!!";
+            }
+            if (spawnInterval == _minInterval)
+            {
+                _phaseText.text = "FINAL PHASE!!";
+                return;
+            }
+            _phaseText.rectTransform.DOAnchorPosX(-500, 0.7f).
+                OnComplete(() => _phaseText.DOFade(0, 1).
+                OnComplete(() =>
+                {
+                    _phaseText.rectTransform.anchoredPosition = new Vector2(-1605, _phaseText.rectTransform.anchoredPosition.y);
+                    Color color = _phaseText.color;
+                    _phaseText.color = new Color(color.r, color.g, color.b, 1);
+                }));
+            _currentChangeTime += _changeTime;
+            spawnInterval = Mathf.Max(spawnInterval - _intervalDelta, _minInterval);
         }
 
     }

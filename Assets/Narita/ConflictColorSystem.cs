@@ -52,14 +52,14 @@ public class ConflictColorSystem : MonoBehaviour
         if (_color != currentColor)
         {
             _cameraShake.Shake(0.1f);
-        }
-        //引いた色が黒になったら死亡
-        if (_color == Color.black)
-        {
             if (_audioSource != null)
             {
                 _audioSource.PlayOneShot(_deadClip);
             }
+        }
+        //引いた色が黒になったら死亡
+        if (_color == Color.black)
+        {
             if (_deadObj != null)
             {
                 var explosion = Instantiate(_deadObj, transform.position, Quaternion.identity);

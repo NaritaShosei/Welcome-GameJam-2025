@@ -13,6 +13,7 @@ public class PlayerHP : MonoBehaviour
     bool _isPlaying;
     AudioSource _audioSource;
     [SerializeField] AudioClip _clip;
+    [SerializeField] AudioClip _deadClip;
 
     public bool IsDead => _hp <= 0;
     private void Start()
@@ -49,6 +50,7 @@ public class PlayerHP : MonoBehaviour
     }
     private void Dead()
     {
+        _audioSource.PlayOneShot(_deadClip);
         _isPlaying = true;
     }
 }
