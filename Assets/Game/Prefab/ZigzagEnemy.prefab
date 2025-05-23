@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8085461159753764864, guid: 576e7364f18b9604b874f530853544c8, type: 3}
       propertyPath: m_Name
-      value: ZigzagEnemy Variant
+      value: ZigzagEnemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
