@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ColorChanger : MonoBehaviour
 {
@@ -9,7 +6,9 @@ public class ColorChanger : MonoBehaviour
     [SerializeField] Color[] _colors = default;
     public Color Color;
     int _index;
-
+    //float _scrollSum;
+    [SerializeField]
+    float _scrollValue = 0.5f;
     private void Start()
     {
         Color = _colors[0];
@@ -17,12 +16,40 @@ public class ColorChanger : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire2"))
+
+        if (Input.GetKeyDown(KeyCode.A))
         {
-            //Debug.Log("色を切り替える処理");
-            Color = _colors[_index];
-            _index++;
-            _index %= _colors.Length;
+            Color = _colors[0];
         }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            Color = _colors[1];
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            Color = _colors[2];
+        }
+        //float scroll = Input.GetAxis("Mouse ScrollWheel");
+
+        //_scrollSum += scroll;
+
+        //if (_scrollSum >= _scrollValue)
+        //{
+        //    _scrollSum = 0;
+        //    _index = (_index + 1) % _colors.Length;
+        //    Color = _colors[_index];
+        //}
+        //else if (_scrollSum <= -_scrollValue)
+        //{
+        //    _scrollSum = 0;
+        //    _index = (_index - 1 + _colors.Length) % _colors.Length;
+        //    Color = _colors[_index];
+        //}
+
+        //if (Input.GetButtonDown("Fire2"))
+        //{
+        //    _index = (_index + 1) % _colors.Length;
+        //    Color = _colors[_index];
+        //}
     }
 }
