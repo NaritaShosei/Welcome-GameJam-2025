@@ -19,11 +19,24 @@ public class ConflictColorSystem : MonoBehaviour
         //すでに色が変更されていたら処理を抜け出す
         if (_isChanged) return;
 
-        //ランダムな色に変更
-        var rIndex = Random.Range(0, _colors.Length);
-        _color = _colors[rIndex];
-        _sr = GetComponent<SpriteRenderer>();
-        _sr.color = _color;
+        if (GameManager.Instance.IsCountUp)
+        {
+            //ランダムな色に変更
+            var rIndex = Random.Range(0, _colors.Length);
+            _color = _colors[rIndex];
+            _sr = GetComponent<SpriteRenderer>();
+            _sr.color = _color;
+        }
+        else
+        {
+            //ランダムな色に変更
+            var rIndex = Random.Range(0, 3);
+            _color = _colors[rIndex];
+            _sr = GetComponent<SpriteRenderer>();
+            _sr.color = _color;
+
+        }
+
     }
 
 

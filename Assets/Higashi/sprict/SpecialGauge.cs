@@ -15,6 +15,7 @@ public class SpecialGauge : MonoBehaviour//SPゲージの管理
 
     public void UpdateGaugeBar(float maxGauge, float currentGauge)//ダメージを受けたときにHPが減る。
     {
+        //DOTween使いたい
         float fillAmount = currentGauge / maxGauge;
         SPFillImage.fillAmount = fillAmount;
     }
