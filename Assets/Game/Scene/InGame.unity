@@ -2127,6 +2127,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _duration: 0.8
+  _explosion: {fileID: 3613692959343783171, guid: 070e0fbd0cc877947b44f0ed84011422, type: 3}
   _sprites:
   - {fileID: 788219260}
   - {fileID: 1761708647}

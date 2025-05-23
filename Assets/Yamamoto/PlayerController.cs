@@ -16,7 +16,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     AnimationCurve _curve;
     [SerializeField] float _duration;
+    [SerializeField] GameObject _explosion;
     bool _isPlaying;
+    bool _isAudioPlaying;
     float _timer;
     int _spCount;
 
@@ -69,10 +71,6 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(2) && _spCount > 0)
         {
-            if (_audioSource != null)
-            {
-                _audioSource.PlayOneShot(_spClip);
-            }
             _spCount--;
             _sprites[_spCount].enabled = false;
             _isPlaying = true;
@@ -126,6 +124,12 @@ public class PlayerController : MonoBehaviour
 
         void UseSpecialMove()
         {
+            Instantiate(_explosion, Vector2.zero, Quaternion.identity);
+
+            if (_audioSource != null)
+            {
+                _audioSource.PlayOneShot(_spClip);
+            }
             Debug.Log("必殺技 発動！！");
             _cameraShake.Shake(0.6f);
             // 敵を全滅させる処理（例：タグが Enemy の全オブジェクトを Destroy）
