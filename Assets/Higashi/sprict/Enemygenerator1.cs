@@ -10,17 +10,21 @@ public class Enemygenerator1 : MonoBehaviour
     [SerializeField] float _intervalDelta = 0.2f;
     [SerializeField] float _minInterval = 1.5f;
 
+    EnemyManager _enemyManager;
+
     private float timer;
 
     // Start is called before the first frame update
     void Start()
     {
+        _enemyManager = GetComponent<EnemyManager>();
         timer = spawnInterval;//timerに生成時間を代入。
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!_enemyManager.IsEnemyMax()) return;
         timer -= Time.deltaTime;
 
         if (timer <= 0f)

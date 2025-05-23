@@ -39,6 +39,7 @@ public class EnemyAttack : MonoBehaviour
     Camera _camera;
     void Start()
     {
+        FindAnyObjectByType<EnemyManager>().AddList(this);
         AttackInterval = Random.Range(3, 7);
         AttackCooldown = AttackInterval;
         InAttack2 = false;
@@ -174,5 +175,11 @@ public class EnemyAttack : MonoBehaviour
     {
         _player.AddDamage();
         // UIにエフェクトをかける
+    }
+    private void OnDisable()
+    {
+        var enemyManager = FindAnyObjectByType<EnemyManager>();
+        if (enemyManager == null) return;
+        enemyManager.RemoveList(this);
     }
 }
