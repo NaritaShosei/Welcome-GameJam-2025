@@ -11,10 +11,13 @@ public class PlayerHP : MonoBehaviour
     [SerializeField] float _duration;
     float _timer;
     bool _isPlaying;
+    AudioSource _audioSource;
+    [SerializeField] AudioClip _clip;
 
     public bool IsDead => _hp <= 0;
     private void Start()
     {
+        _audioSource = GetComponent<AudioSource>();
         _hp = _maxHP;
     }
     private void Update()
@@ -33,6 +36,10 @@ public class PlayerHP : MonoBehaviour
     }
     public void AddDamage()
     {
+        if (_audioSource != null)
+        {
+            _audioSource.PlayOneShot(_clip);
+        }
         _hp -= 1;
         _gauge.UpdateHPBar(_maxHP, _hp);
         if (_hp <= 0)
