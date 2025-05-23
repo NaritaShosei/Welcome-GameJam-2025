@@ -7,7 +7,6 @@ public class HealthGauge : MonoBehaviour//Hpゲージの管理
     public Image hpFillImage; // FillメーターのImage（バー部分）
     //public float maxHP = 100f;
     //private float currentHP;
-
     public void UpdateHPBar(float maxHP, float HP)//ダメージを受けたときにHPが減る。
     {
         float fillAmount = HP / maxHP;
@@ -15,6 +14,7 @@ public class HealthGauge : MonoBehaviour//Hpゲージの管理
         {
             if (HP <= 0)
             {
+                RankingManager.ranking.Add(ScoreManager.Instance.score);
                 SceneLoader.LoadSceneByName("Result");
             }
         });
