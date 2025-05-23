@@ -18,6 +18,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float _duration;
     bool _isPlaying;
     float _timer;
+    int _spCount;
+
+    [SerializeField] SpriteRenderer[] _sprites;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,10 +42,22 @@ public class PlayerController : MonoBehaviour
             Attack();
         }
 
+        if (specialGauge >= gaugeMax)
+        {
+            _sprites[_spCount].enabled = true;
+            _spCount++;
+            specialGauge = 0;
+            // ゲージをリセット
+            specialGauge = 0f;
+            _gauge.UpdateGaugeBar(gaugeMax, specialGauge);
+        }
+
         //必殺技をマウスの中央ボタンで発動
 
-        if (Input.GetMouseButtonDown(2) && specialGauge >= gaugeMax)
+        if (Input.GetMouseButtonDown(2) && _spCount > 0)
         {
+            _spCount--;
+            _sprites[_spCount].enabled = false;
             _isPlaying = true;
         }
 
@@ -103,9 +118,7 @@ public class PlayerController : MonoBehaviour
                 target.SPHit(Random.Range(0, 0.3f));
             }
 
-            // ゲージをリセット
-            specialGauge = 0f;
-            _gauge.UpdateGaugeBar(gaugeMax, specialGauge);
+
         }
     }
 }
