@@ -26,6 +26,6 @@ public class EnemyManager : MonoBehaviour
 
     public bool IsEnemyMax()
     {
-        return _enemies.Count < _maxCount;
+        return _enemies.Count >= _maxCount;
     }
 }

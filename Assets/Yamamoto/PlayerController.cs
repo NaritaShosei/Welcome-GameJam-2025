@@ -21,10 +21,15 @@ public class PlayerController : MonoBehaviour
     int _spCount;
 
     [SerializeField] SpriteRenderer[] _sprites;
+
+    [SerializeField] AudioClip _attackClip;
+    [SerializeField] AudioClip _spClip;
+    AudioSource _audioSource;
     // Start is called before the first frame update
     void Start()
     {
         _cameraShake = FindAnyObjectByType<CameraShake>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -39,23 +44,34 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
+            if (_audioSource != null)
+            {
+                _audioSource.PlayOneShot(_attackClip);
+            }
             Attack();
         }
 
         if (specialGauge >= gaugeMax)
         {
-            _sprites[_spCount].enabled = true;
-            _spCount = Mathf.Min(_spCount + 1, _sprites.Length);
-            specialGauge = 0;
-            // ゲージをリセット
-            specialGauge = 0f;
-            _gauge.UpdateGaugeBar(gaugeMax, specialGauge);
+            if (_spCount < _sprites.Length)
+            {
+                _sprites[_spCount].enabled = true;
+                _spCount = Mathf.Min(_spCount + 1, _sprites.Length);
+                specialGauge = 0;
+                // ゲージをリセット
+                specialGauge = 0f;
+                _gauge.UpdateGaugeBar(gaugeMax, specialGauge);
+            }
         }
 
         //必殺技をマウスの中央ボタンで発動
 
         if (Input.GetMouseButtonDown(2) && _spCount > 0)
         {
+            if (_audioSource != null)
+            {
+                _audioSource.PlayOneShot(_spClip);
+            }
             _spCount--;
             _sprites[_spCount].enabled = false;
             _isPlaying = true;
