@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
         if (specialGauge >= gaugeMax)
         {
             _sprites[_spCount].enabled = true;
-            _spCount = Mathf.Min(_spCount, _sprites.Length);
+            _spCount = Mathf.Min(_spCount + 1, _sprites.Length);
             specialGauge = 0;
             // ゲージをリセット
             specialGauge = 0f;
