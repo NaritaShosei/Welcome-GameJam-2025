@@ -79,7 +79,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interval: 4
   _positions:
-  - {x: 8, y: 2}
+  - {x: 7, y: 2}
   - {x: -3, y: 3}
   - {x: 1, y: 1}
   - {x: -7, y: -2.3}
