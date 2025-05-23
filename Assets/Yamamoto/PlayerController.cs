@@ -25,16 +25,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioClip _attackClip;
     [SerializeField] AudioClip _spClip;
     AudioSource _audioSource;
+    PlayerHP _hp;
     // Start is called before the first frame update
     void Start()
     {
         _cameraShake = FindAnyObjectByType<CameraShake>();
         _audioSource = GetComponent<AudioSource>();
+        _hp = GetComponent<PlayerHP>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (_hp.IsDead) return;
         _sr.color = _colorChanger.Color;
 
         Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);

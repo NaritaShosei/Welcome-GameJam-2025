@@ -17,7 +17,7 @@ public class SpecialGauge : MonoBehaviour//SPゲージの管理
     {
         //DOTween使いたい
         float fillAmount = currentGauge / maxGauge;
-        SPFillImage.DOFillAmount(fillAmount, 0.5f).OnComplete(() =>
+        SPFillImage.DOFillAmount(fillAmount, 0.5f).SetTarget(SPFillImage).OnComplete(() =>
         {
             if (currentGauge >= maxGauge)
             {
