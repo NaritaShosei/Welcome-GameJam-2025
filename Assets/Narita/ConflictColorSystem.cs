@@ -13,6 +13,8 @@ public class ConflictColorSystem : MonoBehaviour
     int _scorePoint;
     SpriteRenderer _sr;
     CameraShake _cameraShake;
+    AudioSource _audioSource;
+    [SerializeField] AudioClip _deadClip;
     private void Start()
     {
         _cameraShake = FindAnyObjectByType<CameraShake>();
@@ -53,6 +55,7 @@ public class ConflictColorSystem : MonoBehaviour
         //引いた色が黒になったら死亡
         if (_color == Color.black)
         {
+            _audioSource.PlayOneShot(_deadClip);
             _sr.enabled = false;
             ScoreManager.Instance.AddScore(_scorePoint);
             Destroy(this.gameObject);
