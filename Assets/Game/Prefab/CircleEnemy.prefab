@@ -8,6 +8,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7622048260012887337, guid: 576e7364f18b9604b874f530853544c8, type: 3}
+      propertyPath: m_Radius
+      value: 2.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 280911883573688562, guid: 576e7364f18b9604b874f530853544c8, type: 3}
+      propertyPath: m_Size.x
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 280911883573688562, guid: 576e7364f18b9604b874f530853544c8, type: 3}
+      propertyPath: m_Size.y
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 280911883573688562, guid: 576e7364f18b9604b874f530853544c8, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: b659c9a3d1ef7674f8eb45397179bbb5, type: 3}
+    - target: {fileID: 1386109213476553993, guid: 576e7364f18b9604b874f530853544c8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.40000004
+      objectReference: {fileID: 0}
+    - target: {fileID: 1386109213476553993, guid: 576e7364f18b9604b874f530853544c8, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.40000004
+      objectReference: {fileID: 0}
     - target: {fileID: 1386109213476553993, guid: 576e7364f18b9604b874f530853544c8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5
@@ -50,7 +74,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8085461159753764864, guid: 576e7364f18b9604b874f530853544c8, type: 3}
       propertyPath: m_Name
-      value: CircleEnemy Variant
+      value: CircleEnemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

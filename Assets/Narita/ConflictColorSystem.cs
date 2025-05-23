@@ -15,6 +15,7 @@ public class ConflictColorSystem : MonoBehaviour
     CameraShake _cameraShake;
     AudioSource _audioSource;
     [SerializeField] AudioClip _deadClip;
+    [SerializeField] GameObject _deadObj;
     private void Start()
     {
         _cameraShake = FindAnyObjectByType<CameraShake>();
@@ -58,6 +59,11 @@ public class ConflictColorSystem : MonoBehaviour
             if (_audioSource != null)
             {
                 _audioSource.PlayOneShot(_deadClip);
+            }
+            if (_deadObj != null)
+            {
+                var explosion = Instantiate(_deadObj, transform.position, Quaternion.identity);
+                Destroy(explosion, 1);
             }
             _sr.enabled = false;
             ScoreManager.Instance.AddScore(_scorePoint);
